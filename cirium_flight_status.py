@@ -3,19 +3,11 @@ import requests
 import sys
 import os
 
-URL = "https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/{}/{}/dep/{}"
+URL = "https://jzjsymorj3.execute-api.ap-southeast-1.amazonaws.com/live/CIRIUM_FLIGHT_STATUS/"
 
 
-def main(fs_code, flight_number, date, airport):
-    res = requests.get(
-        URL.format(fs_code, flight_number, date),
-        params={
-            "appId": os.getenv("APP_ID"),
-            "appKey": os.getenv("APP_KEY"),
-            "utc": "true",
-            "airport": airport,
-        },
-    ).json()
+def main(input):
+    res = requests.get(URL + input).json()["result"]
 
     if "flightStatuses" not in res:
         raise ValueError("key flightStatuses not found")

@@ -3,19 +3,12 @@ import requests
 import sys
 import os
 
-URL = "https://api.flightstats.com/flex/ratings/rest/v1/json/flight/{}/{}"
+URL = "https://jzjsymorj3.execute-api.ap-southeast-1.amazonaws.com/live/CIRIUM_FLIGHT_RATE/"
 
 
-def main(fs_code, flight_number, departure_airport):
-    res = requests.get(
-        URL.format(fs_code, flight_number),
-        params={
-            "appId": os.getenv("APP_ID"),
-            "appKey": os.getenv("APP_KEY"),
-            "departureAirport": departure_airport,
-        },
-    )
-    return res.json()["ratings"][0]["ontimePercent"]
+def main(input):
+    res = requests.get(URL + input)
+    return res.json()["result"]["ratings"][0]["ontimePercent"]
 
 
 if __name__ == "__main__":
